@@ -31,5 +31,31 @@ app.get("/signup", async (req, res) => {
     ).catch()
 })
 
+app.get("/login", async (req, res) => {
+    let userData = req.body
+    let userValidate = userModel.find({email:req.body.email}).then(
+        (item) => {
+            if (item.length > 0) {
+                let passwordValidate = bcrypt.compareSync(req.body.password, item[0].password)
+                if (passwordValidate) {
+                    jwt.sign({ email: req.body.email }, "blogApp", { expiresIn: "1d" },
+                        (error, token) => {
+                            if (error) {
+                                res.json({ "Status": "Token error","error":error })
+                            } else {
+                                res.json({"Status":"Success","token":token,"userid":item[0]._id})
+                            }
+                        }
+                    )
+                } else {
+                    res.json({ "Status": "Password incorrect" })
+                }
+            } else {
+                res.json({ "Status": "Email not registerd" })
+            }
+        }
+    ).catch()
+})
+
 
 app.listen(4000, (error) => { console.log("Server Running") + error })

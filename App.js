@@ -11,7 +11,7 @@ app.use(express.json())
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 
-mongoose.connect("mongodb+srv://adhy:kannan123@cluster0.v6yc0yl.mongodb.net/blogAppDB?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect("mongodb+srv://user:user123@cluster0.v6yc0yl.mongodb.net/blogAppDB?retryWrites=true&w=majority&appName=Cluster0")
 
 app.get("/signup", async (req, res) => {
     let userData = req.body
@@ -31,5 +31,8 @@ app.get("/signup", async (req, res) => {
     ).catch()
 })
 
+app.get("/login",async(req,res)=>{
+
+})
 
 app.listen(4000, (error) => { console.log("Server Running") + error })
